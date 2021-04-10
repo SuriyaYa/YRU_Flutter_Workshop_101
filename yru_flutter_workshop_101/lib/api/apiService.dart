@@ -64,7 +64,27 @@ class ApiService {
     }
   }
 
-
+  static me(String  userAccessToken) async {
+    LogDebug('Request me >>');
+    var url = Uri.https(yru_service, api_me, {'q': '{http}'});
+    LogDebug('Request url me: $url');
+    var response = await http.get(url, headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": "Bearer $userAccessToken",
+    });
+    LogDebug('Request url me: $url');
+    LogDebug('response statusCode: ${response.statusCode}');
+    if (response.statusCode == 200) {
+      // LogDebug('response: ${response.body.toString()}');
+      return response.body.toString();
+    } else {
+      LogDebug(
+          'Request failed with status: ${response.statusCode} \n ${response.body
+              .toString()}');
+      return response.statusCode.toString();
+    }
+  }
 
   static Future<CatDao> randomCat() async {
     var url = Uri.https('some-random-api.ml', '/img/cat', {'q': '{http}'});

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:yru_flutter_workshop_101/api/apiService.dart';
 import 'package:yru_flutter_workshop_101/model/CatDao.dart';
+import 'package:yru_flutter_workshop_101/model/meDao.dart';
 import 'package:yru_flutter_workshop_101/model/usersDao.dart';
 
 import '../configApp.dart';
@@ -202,15 +203,11 @@ class _UserInfoState extends State<UserInfo> {
                             ),
                             SizedBox(height: 10),
                             FutureBuilder(
-                                future: ApiService.randomCat(),
+                                future: ApiService.me(accessTokenSave),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
                                     print('${snapshot.data}');
-                                    CatDao dao = snapshot.data;
-                                    // print('link = ${dao.link.toString()}');
-                                    // return Image.network(
-                                    //   dao.link, width: 300, height: 200,);
-                                    return layoutUserInfo(dao);
+                                    return layoutUserInfo(snapshot.data);
                                   } else {
                                     return CircularProgressIndicator();
                                   }
@@ -227,15 +224,16 @@ class _UserInfoState extends State<UserInfo> {
     );
   }
 
-  layoutUserInfo(CatDao dao){
-    // return Image.network(
-    //   dao.link, width: 300, height: 200,);
+  layoutUserInfo(String data){
 
-    return Column(
+    Map map = json.decode(data);
+    MeDao dao = MeDao.fromJson(map);
+
+    return new Column(
       children: [
-        Text('Name'),
-        Text('Email'),
-        Image.network(dao.link, width: 300, height: 200,)
+        Text('name'),
+        Text('Name : ${dao.name}'),
+        Text('Email : ${dao.email}'),
       ],
     );
 
