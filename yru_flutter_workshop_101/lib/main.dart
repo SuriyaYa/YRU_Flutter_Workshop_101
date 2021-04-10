@@ -3,11 +3,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yru_flutter_workshop_101/screen/centerPage.dart';
 import 'package:yru_flutter_workshop_101/screen/loginPage.dart';
-import 'package:yru_flutter_workshop_101/screen/usersPage.dart';
 
+import 'api/apiService.dart';
 import 'configApp.dart';
+import 'model/authLogin.dart';
 
 void main() {
   runApp(MyApp());
@@ -63,7 +65,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 'YRU Flutter Workshop 101\n(Splash Screen)',
                   style: TextStyle(fontSize: 28,color: Colors.blue),textAlign: TextAlign.center,
               ),
-
+              FutureBuilder(
+                  future: ApiService.login('hosea46@example.com', 'password'),
+                  builder: (contextUser, snapshot) {
+                    print('authLoginApp status: ${snapshot.data}');
+                    if (snapshot.hasData) {
+                      print('login ${snapshot.data}');
+                      Map map = json.decode(snapshot.data);
+                      AuthLogin dao = AuthLogin.fromJson(map);
+                      print('tokenType = ${dao.tokenType}');
+                      print('accessToken = ${dao.accessToken}');
+                      print('expiresIn = ${dao.expiresIn.toString()}');
+                      return Text('');
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  }
+              ),
             ],
           ),
         ),
@@ -71,18 +89,19 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  delayPage(){
-    Timer(Duration(seconds: 5), () {
+  delayPage() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    accessTokenSave = prefs.getString('yru_access_token') ;
+
+    Timer(Duration(seconds: 3), () {
       if(userAuth != null)
         if(userAuth){
           try {
             LogDebug("Delay => Home");
             Navigator.pop(context);
-            // Navigator.push(context, MaterialPageRoute(
-            //     builder: (context) => LoginPage(title: "Login")
-            // ),
             Navigator.push(context, MaterialPageRoute(
-                builder: (context) => LoginPage(title: "Login")
+                builder: (context) => LoginPage(title: "Login > 2")
             ),
             );
           } on Exception catch (exception) {

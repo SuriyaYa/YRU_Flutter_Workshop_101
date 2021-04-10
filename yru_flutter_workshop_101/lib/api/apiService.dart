@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:yru_flutter_workshop_101/configApp.dart';
 import 'package:yru_flutter_workshop_101/model/CatDao.dart';
 import 'package:yru_flutter_workshop_101/model/authLogin.dart';
-import 'package:yru_flutter_workshop_101/model/errorDAO.dart';
+
+import '../saveData.dart';
 
 class ApiService {
 
@@ -18,10 +19,17 @@ class ApiService {
 
     LogDebug('Request url: $url');
     LogDebug('Request body: $_json');
-    LogDebug('response statusCode: ${response.statusCode}');
+    // LogDebug('response statusCode: ${response.statusCode}');
 
     if (response.statusCode == 200) {
-      LogDebug('response: ${response.body.toString()}');
+      // LogDebug('response: ${response.body.toString()}');
+      Map map = json.decode(response.body.toString());
+      AuthLogin dao = AuthLogin.fromJson(map);
+      print('tokenType = ${dao.tokenType}');
+      print('accessToken = ${dao.accessToken}');
+      accessTokenSave = dao.accessToken.toString();
+      SaveData.saveAccessToken(accessTokenSave);
+      print('expiresIn = ${dao.expiresIn.toString()}');
       return response.body.toString();
     } else if (response.statusCode == 201) {
       LogDebug('response: ${response.body.toString()}');
@@ -34,14 +42,14 @@ class ApiService {
     }
   }
 
-  static allUser() async {
+  static allUser(String  userAccessToken) async {
     LogDebug('Request allUser >>');
     var url = Uri.https(yru_service, api_user, {'q': '{http}'});
     LogDebug('Request url allUser: $url');
     var response = await http.get(url, headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
-      // "Authorization": "$userTokenType $userAccessToken",
+      "Authorization": "Bearer $userAccessToken",
     });
     LogDebug('Request url allUser: $url');
     LogDebug('response statusCode: ${response.statusCode}');

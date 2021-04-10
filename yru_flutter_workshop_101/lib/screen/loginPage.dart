@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:yru_flutter_workshop_101/api/apiService.dart';
-import 'package:yru_flutter_workshop_101/model/CatDao.dart';
 import 'package:yru_flutter_workshop_101/model/authLogin.dart';
+import 'package:yru_flutter_workshop_101/screen/mainTab.dart';
 import 'package:yru_flutter_workshop_101/screen/usersPage.dart';
 
 import '../configApp.dart';
@@ -25,14 +25,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text("Login Page"),
-      ),
+      // appBar: AppBar(
+      //   title: Text(widget.title),
+      // ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 60.0),
+              padding: const EdgeInsets.only(top: 100.0),
               child: Center(
                 child: Container(
                     width: 200,
@@ -89,18 +89,18 @@ class _LoginPageState extends State<LoginPage> {
               child: ElevatedButton(
                 onPressed: () {
                   LogDebug('Press authLoginApp u:$user , p:$password');
-                  // Navigator.push(
-                  //     context, MaterialPageRoute(builder: (_) => MyApp()));
-                  Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context) => UsersPage(title: "User")
-                  ),
-                  );
-                  authLoginApp();
-                  setState(() {
-                    user = '';
-                    password = '';
-                  });
+                  callUserInfo();
+                  // Navigator.pop(context);
+                  // Navigator.push(context, MaterialPageRoute(
+                  //     builder: (context) => UsersPage(title: "User")
+                  // ),
+                  // );
+                  // authLoginApp(context,'hosea46@example.com', 'password');
+                  // authLoginApp(user, password);
+                  // setState(() {
+                  //   user = '';
+                  //   password = '';
+                  // });
                 },
                 child: Text(
                   'Login',
@@ -118,52 +118,40 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  authLoginApp(){
-    LogDebug('authLoginApp');
-        FutureBuilder(
-            future: ApiService.randomCat(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                print('${snapshot.data}');
-                CatDao dao = snapshot.data;
-                print('link = ${dao.link.toString()}');
-                return Image.network(dao.link,width: 300,height: 200,);
-              } else {
-                return CircularProgressIndicator();
-              }
-            }
-        );
-        FutureBuilder(
-            future: ApiService.login('metz.serena@example.net', 'password'),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                print('login ${snapshot.data}');
-                Map map = json.decode(snapshot.data);
-                AuthLogin dao = AuthLogin.fromJson(map);
-                print('tokenType = ${dao.tokenType}');
-                print('accessToken = ${dao.accessToken}');
-                print('expiresIn = ${dao.expiresIn.toString()}');
-                return Text('');
-              } else {
-                return CircularProgressIndicator();
-              }
-            }
-        );
+  authLoginApp(BuildContext contextUser,String email, String password){
+    LogDebug('authLoginApp $contextUser');
+    LogDebug('accessTokenSave: $accessTokenSave');
         // FutureBuilder(
-        //     future: ApiService.allUser(),
-        //     builder: (context, snapshot) {
+        //     future: ApiService.login(email,password),
+        //     builder: (contextUser, snapshot) {
+        //       print('authLoginApp status: ${snapshot.data}');
         //       if (snapshot.hasData) {
+        //         print('login ${snapshot.data}');
         //         Map map = json.decode(snapshot.data);
-        //         UsersDao dao = UsersDao.fromJson(map);
-        //         print('currentPage = ${dao.data.currentPage}');
-        //         print('name = ${dao.data.dataProfile[0].name}');
-        //         // print('expiresIn = ${dao.expiresIn.toString()}');
+        //         AuthLogin dao = AuthLogin.fromJson(map);
+        //         print('tokenType = ${dao.tokenType}');
+        //         print('accessToken = ${dao.accessToken}');
+        //         print('expiresIn = ${dao.expiresIn.toString()}');
         //         return Text('');
         //       } else {
         //         return CircularProgressIndicator();
         //       }
         //     }
         // );
+
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(
+          builder: (context) => MainTap(title: "Main")
+      ),
+      );
+  }
+
+  callUserInfo(){
+    Navigator.pop(context);
+    Navigator.push(context, MaterialPageRoute(
+        builder: (context) => UserInfo(title: "User Info")
+    ),
+    );
   }
 
 }

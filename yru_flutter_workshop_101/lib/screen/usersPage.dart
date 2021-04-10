@@ -6,16 +6,19 @@ import 'package:yru_flutter_workshop_101/api/apiService.dart';
 import 'package:yru_flutter_workshop_101/model/usersDao.dart';
 
 import '../configApp.dart';
+import '../saveData.dart';
 
-class UsersPage extends StatefulWidget {
+class MainTap extends StatefulWidget {
   final String title;
 
-  const UsersPage({Key key, this.title}) : super(key: key);
+  const MainTap({Key key, this.title}) : super(key: key);
   @override
-  _UsersPageState createState() => _UsersPageState();
+  _MainTapState createState() => _MainTapState();
 }
 
-class _UsersPageState extends State<UsersPage> with WidgetsBindingObserver{
+class _MainTapState extends State<MainTap> with WidgetsBindingObserver{
+
+
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -45,6 +48,7 @@ class _UsersPageState extends State<UsersPage> with WidgetsBindingObserver{
     // TODO: implement initState
     super.initState();
     LogDebug('<<<<<<<<<<< initState >>>>>>>>>>');
+
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -75,7 +79,7 @@ class _UsersPageState extends State<UsersPage> with WidgetsBindingObserver{
               SizedBox(height: 20.0,),
               new Expanded(
                   child: FutureBuilder(
-                      future: ApiService.allUser(),
+                      future: ApiService.allUser(accessTokenSave),
                       builder: (context, data) {
                         if(data.hasData){
                           // LogDebug('data display= ${data.data}');

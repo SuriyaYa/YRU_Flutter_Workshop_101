@@ -14,3 +14,4 @@ LogDebug(String message){
 const yru_service = 'c8f6363073eb.ngrok.io';
 const api_login = '/api/auth/login';
 const api_user = '/api/users';
+String accessTokenSave = '';

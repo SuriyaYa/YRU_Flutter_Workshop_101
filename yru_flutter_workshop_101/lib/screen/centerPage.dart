@@ -30,16 +30,6 @@ class _CenterPageState extends State<CenterPage> {
                 style: TextStyle(fontSize: 30,color: Colors.black)
             ),
 
-            // child: Container(
-            //   width: 150.0,
-            //   height: 100.0,
-            //   color: Colors.red,
-            // ),
-            //
-            // child: Image.asset('assets/images/logo/splash_yru_logo.png',
-            //   height: 250.0,
-            // ),
-
 
           ),
       ),
