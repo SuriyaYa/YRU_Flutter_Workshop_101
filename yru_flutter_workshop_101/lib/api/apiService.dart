@@ -1,14 +1,17 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:yru_flutter_workshop_101/configApp.dart';
 import 'package:yru_flutter_workshop_101/model/CatDao.dart';
 import 'package:yru_flutter_workshop_101/model/authLogin.dart';
+import 'package:yru_flutter_workshop_101/model/errorDao.dart';
 
 import '../saveData.dart';
 
 class ApiService {
 
-  static login(String email, String password) async {
+  static Future<String> login(String email, String password) async {
     var url = Uri.https(yru_service, api_login, {'q': '{http}'});
     String _json = '{"email": "$email", "password": "$password"}';
     var response = await http.post(url, headers: {
@@ -19,17 +22,10 @@ class ApiService {
 
     LogDebug('Request url: $url');
     LogDebug('Request body: $_json');
-    // LogDebug('response statusCode: ${response.statusCode}');
+    LogDebug('response statusCode: ${response.statusCode}');
 
     if (response.statusCode == 200) {
       // LogDebug('response: ${response.body.toString()}');
-      Map map = json.decode(response.body.toString());
-      AuthLogin dao = AuthLogin.fromJson(map);
-      print('tokenType = ${dao.tokenType}');
-      print('accessToken = ${dao.accessToken}');
-      accessTokenSave = dao.accessToken.toString();
-      SaveData.saveAccessToken(accessTokenSave);
-      print('expiresIn = ${dao.expiresIn.toString()}');
       return response.body.toString();
     } else if (response.statusCode == 201) {
       LogDebug('response: ${response.body.toString()}');
@@ -38,11 +34,97 @@ class ApiService {
       LogDebug(
           'Request failed with status: ${response.statusCode} \n ${response.body
               .toString()}');
+      Map map = json.decode(response.body.toString());
+      ErrorDao dao = ErrorDao.fromJson(map);
+      Fluttertoast.showToast(
+          msg: "${response.statusCode} ${dao.error}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 20.0
+      );
       return response.statusCode.toString();
     }
   }
 
-  static allUser(String  userAccessToken) async {
+  static Future<String> signUp(String name, String phone, String email, String password) async {
+    var url = Uri.https(yru_service, api_signUp, {'q': '{http}'});
+    String _json = '{"name": "$name","phone": "$phone","email": "$email", "password": "$password"}';
+    var response = await http.post(url, headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      // "Authorization": "$userTokenType $userAccessToken",
+    }, body: _json);
+
+    LogDebug('Request url: $url');
+    LogDebug('Request body: $_json');
+    LogDebug('response statusCode: ${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      // LogDebug('response: ${response.body.toString()}');
+      return response.body.toString();
+    } else if (response.statusCode == 201) {
+      LogDebug('response: ${response.body.toString()}');
+      return response.body.toString();
+    } else {
+      LogDebug(
+          'Request failed with status: ${response.statusCode} \n ${response.body
+              .toString()}');
+      Map map = json.decode(response.body.toString());
+      ErrorDao dao = ErrorDao.fromJson(map);
+      Fluttertoast.showToast(
+          msg: "${response.statusCode} ${dao.error}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 20.0
+      );
+      return response.statusCode.toString();
+    }
+  }
+
+  static Future<String> posts(String userAccessToken) async {
+    LogDebug('Request post: $userAccessToken');
+    var url = Uri.https(yru_service, api_posts, {'q': '{http}'});
+    var response = await http.get(url, headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": "Bearer $userAccessToken",
+    });
+
+    LogDebug('Request url: $url');
+    LogDebug('response statusCode: ${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      // LogDebug('response: ${response.body.toString()}');
+      return response.body.toString();
+    } else if (response.statusCode == 201) {
+      LogDebug('response: ${response.body.toString()}');
+      return response.body.toString();
+    } else {
+      LogDebug(
+          'Request failed with status: ${response.statusCode} \n ${response.body
+              .toString()}');
+      Map map = json.decode(response.body.toString());
+      ErrorDao dao = ErrorDao.fromJson(map);
+      Fluttertoast.showToast(
+          msg: "${response.statusCode} ${dao.error}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 20.0
+      );
+      return response.statusCode.toString();
+    }
+  }
+
+  static allUser(String userAccessToken) async {
     LogDebug('Request allUser >>');
     var url = Uri.https(yru_service, api_user, {'q': '{http}'});
     LogDebug('Request url allUser: $url');
@@ -60,6 +142,17 @@ class ApiService {
       LogDebug(
           'Request failed with status: ${response.statusCode} \n ${response.body
               .toString()}');
+      Map map = json.decode(response.body.toString());
+      ErrorDao dao = ErrorDao.fromJson(map);
+      Fluttertoast.showToast(
+          msg: "${response.statusCode} ${dao.error}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 20.0
+      );
       return response.statusCode.toString();
     }
   }

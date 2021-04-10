@@ -1,10 +1,10 @@
-class ErrorDAO {
+class ErrorDao {
   String error;
   int code;
 
-  ErrorDAO({this.error, this.code});
+  ErrorDao({this.error, this.code});
 
-  ErrorDAO.fromJson(Map<String, dynamic> json) {
+  ErrorDao.fromJson(Map<String, dynamic> json) {
     error = json['error'];
     code = json['code'];
   }

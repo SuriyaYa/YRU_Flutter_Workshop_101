@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yru_flutter_workshop_101/screen/centerPage.dart';
 import 'package:yru_flutter_workshop_101/screen/loginPage.dart';
+import 'package:yru_flutter_workshop_101/screen/welcome/welcome_screen.dart';
 
 import 'api/apiService.dart';
 import 'configApp.dart';
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'YRU Flutter Workshop 101'),
+      // home: MyHomePage(title: 'YRU Flutter Workshop 101'),
+      home: WelcomeScreen(),
     );
   }
 }
@@ -68,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
               FutureBuilder(
                   future: ApiService.login('hosea46@example.com', 'password'),
                   builder: (contextUser, snapshot) {
-                    print('authLoginApp status: ${snapshot.data}');
+                    // print('authLoginApp status: ${snapshot.data}');
                     if (snapshot.hasData) {
                       print('login ${snapshot.data}');
                       Map map = json.decode(snapshot.data);

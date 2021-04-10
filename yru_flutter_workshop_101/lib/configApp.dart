@@ -1,4 +1,6 @@
 
+import 'package:flutter/material.dart';
+
 bool userAuth = true;
 const enableLog = true; ///For debug mode [Enable=true , Disable=false]
 
@@ -13,6 +15,12 @@ LogDebug(String message){
 ///Api Service
 const yru_service = 'c8f6363073eb.ngrok.io';
 const api_login = '/api/auth/login';
+const api_signUp = '/api/auth/signup';
 const api_me = '/api/auth/me';
 const api_user = '/api/users';
+const api_posts = '/api/posts';
 String accessTokenSave = '';
+
+
+const kPrimaryColor = Colors.blueAccent;//Color(0xFF6F35A5);
+const kPrimaryLightColor = Color(0xFFF1E6FF);

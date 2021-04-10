@@ -8,15 +8,15 @@ import 'package:yru_flutter_workshop_101/model/usersDao.dart';
 import '../configApp.dart';
 import '../saveData.dart';
 
-class MainTap extends StatefulWidget {
+class UserPage extends StatefulWidget {
   final String title;
 
-  const MainTap({Key key, this.title}) : super(key: key);
+  const UserPage({Key key, this.title}) : super(key: key);
   @override
-  _MainTapState createState() => _MainTapState();
+  _UserPageState createState() => _UserPageState();
 }
 
-class _MainTapState extends State<MainTap> with WidgetsBindingObserver{
+class _UserPageState extends State<UserPage> with WidgetsBindingObserver{
 
 
 

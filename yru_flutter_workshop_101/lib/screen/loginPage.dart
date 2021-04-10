@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:yru_flutter_workshop_101/api/apiService.dart';
 import 'package:yru_flutter_workshop_101/model/authLogin.dart';
-import 'package:yru_flutter_workshop_101/screen/mainTab.dart';
+import 'package:yru_flutter_workshop_101/screen/home/homePage.dart';
 import 'package:yru_flutter_workshop_101/screen/usersPage.dart';
 
 import '../configApp.dart';
@@ -141,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
 
       Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(
-          builder: (context) => MainTap(title: "Main")
+          builder: (context) => HomePage(title: "Main")
       ),
       );
   }
@@ -149,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
   callUserInfo(){
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(
-        builder: (context) => UserInfo(title: "User Info")
+        builder: (context) => UserPage(title: "User Info")
     ),
     );
   }
