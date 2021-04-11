@@ -6,9 +6,9 @@ class SaveData {
 
   ///Save
 
-  static saveAccessToken(String access_token) async {
+  static saveAccessToken(String accessToken) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('yru_access_token', access_token);
+    await prefs.setString('yru_access_token', accessToken);
   }
 
   static saveName(String name) async {

@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:yru_flutter_workshop_101/api/apiService.dart';
 import 'package:yru_flutter_workshop_101/model/meDao.dart';
-
 import '../../../configApp.dart';
 
 class TabMe extends StatelessWidget {
@@ -15,11 +13,9 @@ class TabMe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Container(
       padding: new EdgeInsets.all(16.0),
       child: ListView(
-        // padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
         children: <Widget>[
           SingleChildScrollView(
             child: Column(
@@ -28,8 +24,6 @@ class TabMe extends StatelessWidget {
                   new Container(
                       padding: new EdgeInsets.all(10.0),
                       child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        // crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             FutureBuilder(
                                 future: ApiService.me(accessTokenSave),

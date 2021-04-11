@@ -4,10 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:yru_flutter_workshop_101/configApp.dart';
 import 'package:yru_flutter_workshop_101/model/CatDao.dart';
-import 'package:yru_flutter_workshop_101/model/authLogin.dart';
 import 'package:yru_flutter_workshop_101/model/errorDao.dart';
 
-import '../saveData.dart';
 
 class ApiService {
 
@@ -63,12 +61,30 @@ class ApiService {
     LogDebug('response statusCode: ${response.statusCode}');
 
     if (response.statusCode == 200) {
-      // LogDebug('response: ${response.body.toString()}');
+      LogDebug('response: ${response.body.toString()}');
       return response.body.toString();
     } else if (response.statusCode == 201) {
       LogDebug('response: ${response.body.toString()}');
       return response.body.toString();
-    } else {
+    } else if (response.statusCode == 422) {
+      LogDebug('response: ${response.body.toString()}');
+      LogDebug(
+          'Request failed with status: ${response.statusCode} \n ${response.body
+              .toString()}');
+      // Map map = json.decode(response.body.toString());
+      // Error2Dao dao = Error2Dao.fromJson(map);
+      Fluttertoast.showToast(
+          msg: "${response.body.toString()}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 3,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 20.0
+      );
+      return response.statusCode.toString();
+    }else {
+      LogDebug('response: ${response.body.toString()}');
       LogDebug(
           'Request failed with status: ${response.statusCode} \n ${response.body
               .toString()}');
@@ -179,7 +195,7 @@ class ApiService {
     }
   }
 
-  static Future<CatDao> randomCat() async {
+  static randomCat() async {
     var url = Uri.https('some-random-api.ml', '/img/cat', {'q': '{http}'});
     var response = await http.get(url, headers:  {
         "Content-Type": "application/json",
@@ -192,7 +208,7 @@ class ApiService {
       Map map = json.decode(response.body);
       CatDao dao = CatDao.fromJson(map);
       // print("URL link = " + dao?.link);
-      return dao;
+      return response.statusCode.toString();
     }
   }
 

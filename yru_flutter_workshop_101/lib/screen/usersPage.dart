@@ -1,12 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:yru_flutter_workshop_101/api/apiService.dart';
 import 'package:yru_flutter_workshop_101/model/usersDao.dart';
-
 import '../configApp.dart';
-import '../saveData.dart';
 
 class UserPage extends StatefulWidget {
   final String title;
@@ -174,9 +170,9 @@ class Device {
   String id;
   String name;
   String email;
-  String created_at;
-  String updated_at;
-  Device(this.id, this.name, this.email, this.created_at, this.updated_at);
+  String createdAt;
+  String updatedAt;
+  Device(this.id, this.name, this.email, this.createdAt, this.updatedAt);
 }
 
 

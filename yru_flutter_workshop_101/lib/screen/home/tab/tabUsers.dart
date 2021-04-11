@@ -124,7 +124,7 @@ class Users {
   String id;
   String name;
   String email;
-  String created_at;
-  String updated_at;
-  Users(this.id, this.name, this.email, this.created_at, this.updated_at);
+  String createdAt;
+  String updatedAt;
+  Users(this.id, this.name, this.email, this.createdAt, this.updatedAt);
 }

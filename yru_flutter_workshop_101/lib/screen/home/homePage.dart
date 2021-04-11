@@ -1,15 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:yru_flutter_workshop_101/api/apiService.dart';
-import 'package:yru_flutter_workshop_101/model/CatDao.dart';
-import 'package:yru_flutter_workshop_101/model/meDao.dart';
-import 'package:yru_flutter_workshop_101/model/usersDao.dart';
 import 'package:yru_flutter_workshop_101/screen/home/tab/tabMe.dart';
 import 'package:yru_flutter_workshop_101/screen/home/tab/tabPosts.dart';
 import 'package:yru_flutter_workshop_101/screen/home/tab/tabUsers.dart';
-
-import '../../configApp.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -43,65 +35,16 @@ class _HomePageState extends State<HomePage> {
           ),
           body: TabBarView(
             children: [
-              TabPosts(),
-              TabUsers(),
-              TabMe(),
+              TabPosts(), // ignore: missing_required_param
+              TabUsers(), // ignore: missing_required_param
+              TabMe(), // ignore: missing_required_param
             ],
           ),
         ),
       ),
     );
   }
-  ///Tab 1
-  tabHome() {
-    return Container(
-      padding: new EdgeInsets.all(16.0),
-      child: ListView(
-        // padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
-        children: <Widget>[
-          SingleChildScrollView(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  new Container(
-                      padding: new EdgeInsets.all(5.0),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.blue, // background
-                              ),
-                              child: Text('Refresh'),
-                              onPressed: () {
-                                setState(() {
 
-                                });
-                              },
-                            ),
-                            SizedBox(height: 10),
-                            FutureBuilder(
-                                future: ApiService.posts(accessTokenSave),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    print('${snapshot.data}');
-                                    return Text('');
-                                  } else {
-                                    return CircularProgressIndicator();
-                                  }
-                                }
-                            ),
-                          ]
-                      )
-                  ),
-                ]
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
 }
 
