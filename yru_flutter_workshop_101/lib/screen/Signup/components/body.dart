@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:yru_flutter_workshop_101/api/apiService.dart';
+import 'package:yru_flutter_workshop_101/model/registerDao.dart';
 import 'package:yru_flutter_workshop_101/screen/Login/login_screen.dart';
 import 'package:yru_flutter_workshop_101/screen/Signup/components/background.dart';
 import 'package:yru_flutter_workshop_101/screen/Signup/components/or_divider.dart';
@@ -41,23 +43,27 @@ class Body extends StatelessWidget {
               hintText: "ชื่อ-สกุล",
               onChanged: (value) {
                 getName = value;
+                getName = getName.trim();
               },
             ),
             RoundedInputField(
               hintText: "เบอร์โทรศัพท์",
               onChanged: (value) {
                 getPhoneNumber =value;
+                getPhoneNumber.trim();
               },
             ),
             RoundedInputField(
               hintText: "อีเมล",
               onChanged: (value) {
                 getEmail = value;
+                getEmail = getEmail.trim();
               },
             ),
             RoundedPasswordField(
               onChanged: (value) {
                 getPassword = value;
+                getPassword = getPassword.trim();
               },
             ),
             RoundedButton(
@@ -66,7 +72,8 @@ class Body extends StatelessWidget {
                 LogDebug('$getName / $getPhoneNumber / $getEmail / $getPassword');
 
                 // callApi(context,'name','098','hosea46@example.com', 'password');
-                if(getName.isNotEmpty && getPhoneNumber.isNotEmpty && getEmail.isNotEmpty && getPassword.isEmpty) {
+                if(getName.isNotEmpty && getPhoneNumber.isNotEmpty && getEmail.isNotEmpty && getPassword.isNotEmpty) {
+                  LogDebug('callApi register >>> 1');
                   callApi(context,getName,getPhoneNumber,getEmail,getPassword);
                 }else{
                   Fluttertoast.showToast(
@@ -121,16 +128,15 @@ class Body extends StatelessWidget {
   }
 
   void callApi(BuildContext context,String name, String phone, String user, String password) {
+    LogDebug('callApi register >>>');
     ApiService.signUp(name, phone, user, password).then((data) {
       LogDebug('data =  $data');
       if(data.toString().length > 3) {
         // Map map = json.decode(data);
-        // AuthLogin dao = AuthLogin.fromJson(map);
-        // print('tokenType = ${dao.tokenType}');
-        // print('accessToken = ${dao.accessToken}');
-        // print('expiresIn = ${dao.expiresIn.toString()}');
-        // accessTokenSave = dao.accessToken.toString();
-        // SaveData.saveAccessToken(accessTokenSave);
+        // RegisterDao dao = RegisterDao.fromJson(map);
+        // print('name = ${dao.data.name}');
+        // print('email = ${dao.data.email}');
+        // print('emailVerifiedAt = ${dao.data.emailVerifiedAt}');
 
         Fluttertoast.showToast(
             msg: "สมัครสมาชิกสำเร็จสำเร็จ",

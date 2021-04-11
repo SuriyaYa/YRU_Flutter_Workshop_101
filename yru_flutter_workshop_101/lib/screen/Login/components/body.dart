@@ -45,11 +45,13 @@ class Body extends StatelessWidget {
               hintText: "อีเมล",
               onChanged: (value) {
                 userEmail = value;
+                userEmail = userEmail.trim();
               },
             ),
             RoundedPasswordField(
               onChanged: (value) {
                 userPassword = value;
+                userPassword = userPassword.trim();
               },
             ),
             RoundedButton(
@@ -57,7 +59,7 @@ class Body extends StatelessWidget {
               press: () {
                 LogDebug('$userEmail / $userPassword');
 
-                callApi(context,'hosea46@example.com', 'password');
+                // callApi(context,'hosea46@example.com', 'password');
                 if(userEmail.isNotEmpty && userPassword.isNotEmpty) {
                   callApi(context,userEmail,userPassword);
                 }else{
