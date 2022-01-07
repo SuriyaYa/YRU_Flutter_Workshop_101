@@ -58,6 +58,7 @@ class Body extends StatelessWidget {
               text: "เข้าใช้งาน",
               press: () {
                 LogDebug('$userEmail / $userPassword');
+                print('call>>>');
 
                 // callApi(context,'suriya.ni@yru.ac.th', '123456');
                 if(userEmail.isNotEmpty && userPassword.isNotEmpty) {
@@ -96,6 +97,8 @@ class Body extends StatelessWidget {
   }
 
   void callApi(BuildContext context,String user, String password) {
+    print('callApi >>>');
+
     ApiService.login(user,password).then((data) {
       LogDebug('data =  $data');
       if(data.toString().length > 3) {

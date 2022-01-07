@@ -10,6 +10,7 @@ import 'package:yru_flutter_workshop_101/model/errorDao.dart';
 class ApiService {
 
   static Future<String> login(String email, String password) async {
+    LogDebug('Request login service');
     var url = Uri.https(yru_service, api_login, {'q': '{http}'});
     String _json = '{"email": "$email", "password": "$password"}';
     var response = await http.post(url, headers: {

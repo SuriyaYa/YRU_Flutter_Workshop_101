@@ -13,7 +13,7 @@ LogDebug(String message){
 }
 
 ///Api Service
-const yru_service = 'd5b245165009.ngrok.io';
+const yru_service = 'd672cfc92395.ngrok.io';
 const api_login = '/api/auth/login';
 const api_signUp = '/api/auth/register';
 const api_me = '/api/auth/me';
